@@ -173,14 +173,9 @@ public class QueryUtils {
                  pos_path=moviedet.getString("poster_path");
                  average_votes=moviedet.getString("vote_average");
                  plot_synop=moviedet.getString("overview");
-                Log.v("ArrayListResult",tle);
-                Log.v("ArrayListResult",rel_date);
-                Log.v("ArrayListResult",pos_path);
-                Log.v("ArrayListResult",average_votes);
-                Log.v("ArrayListResult",plot_synop);
                 Movie_Data movie=new Movie_Data(tle,rel_date,pos_path,average_votes,plot_synop);
-                Movie_Data movie_frontpg=new Movie_Data(pos_path);
-                movies.add(movie_frontpg);
+                //Movie_Data movie_frontpg=new Movie_Data(pos_path);
+                movies.add(movie);
 
             }
 

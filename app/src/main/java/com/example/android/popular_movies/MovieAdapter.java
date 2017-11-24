@@ -1,16 +1,19 @@
 package com.example.android.popular_movies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 
@@ -25,6 +28,9 @@ public class MovieAdapter extends
     private List<Movie_Data> mMovies;
     // Store the context for easy access
     private Context mContext;
+
+
+
 
     // Pass in the contact array into the constructor
     public MovieAdapter(Context context, List<Movie_Data> mvieposters) {
@@ -46,14 +52,24 @@ public class MovieAdapter extends
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
             moviePosterView = (ImageView) itemView.findViewById(R.id.posters);
+            moviePosterView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Movie_Data moviedet = mMovies.get(getAdapterPosition());
+
+                    Intent intent = new Intent(mContext, MovieDetail.class);
+                    intent.putExtra("MovieData", moviedet);
+                    getContext().startActivity(intent);
+                }
+            });
         }
     }
+
     @Override
     public MovieAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -73,8 +89,7 @@ public class MovieAdapter extends
         // Get the data model based on position
         Movie_Data movie = mMovies.get(position);
         // Set item views based on your views and data model
-        ImageView imgView=holder.moviePosterView;
-        Log.v("Posterurl",movie.getMuvie_pos_path());
+        ImageView imgView = holder.moviePosterView;
         Picasso.with(mContext).load(movie.getMuvie_pos_path()).into(imgView);
     }
 
